@@ -254,9 +254,9 @@ func DetectGPUs() {
 		out, err := exec.Command(*flag_mumax, "-test", gpuflag).Output()
 		if err == nil {
 			info := string(out)
-			if strings.HasSuffix(info, "\n") {
-				info = info[:len(info)-1]
-			}
+			trim := strings.TrimSpace(info, "\n")
+			split := strings.Split(trim, "\n")
+			info = split[len(split)-1]
 			log.Println("gpu", i, ":", info)
 			GPUs = append(GPUs, info)
 		}
